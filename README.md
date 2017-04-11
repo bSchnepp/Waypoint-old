@@ -21,9 +21,6 @@ I'd like to also implement some specific features for Waypoint:
   - Ideally, a custom compiler and linker and assembler would be nice, but that's too much. So just clang + nasm.
   - A custom shell, built from scratch, making sure it's *very* obvious Waypoint is it's own thing.
   - A C standard library implementation specifically for Waypoint. 
-  - Have a working, stable release before Half-Life 3.
-  - Because Linus did it.
-  - Be more serious in readmes in the next update.
 
 Some notes and stuff:
   - Files are files. They're not everything. Everything is an _object_, which is *usually* a file, but not **always**.
