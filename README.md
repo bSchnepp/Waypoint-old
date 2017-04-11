@@ -26,9 +26,9 @@ Some notes and stuff:
   - Files are files. They're not everything. Everything is an _object_, which is *usually* a file, but not **always**.
   - What actually *are* files are run based on their extension. For example, 'waydll.dyn' is always a dynamic library, even if the file contents say otherwise, we disregard that. 'waypro.txt' is a text file, even if it has the PE/ELF/whatever I decide executable header.
   - Locations are mounted based on drives. Not as folders in root and whatever. In this sense, we're **very** DOS-like.
-  '''
+```
     A:/Waypoint/System/Kernel/ is a valid directory.
-  '''
+```  
   - A:/ is "root". We mount partitions like A:1/, A:2/, A:3/, etc. Separate SATA stuff is on B:/, C:/, etc. the :0 for the root is implied.
   - Shell will probably look like this:
 ```
