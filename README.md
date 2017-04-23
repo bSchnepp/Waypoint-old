@@ -76,6 +76,6 @@ A (barely) working "prototype" for MS-WINDOWS is in another repository, called J
 
 
 Waypoint should install with a couple users after installation:
-SYSTEM (equivalent to UNIX 'root')
-Administrator (Users and Groups are the same thing in Waypoint: a User inherits another User or multiple Users. This is essentially 'sudo' group.)
-(USERNAME) (Whatever username you pick at install time.)
+- SYSTEM (equivalent to UNIX 'root')
+- Administrator (Users and Groups are the same thing in Waypoint: a User inherits another User or multiple Users. This is essentially 'sudo' group.)
+- (USERNAME) (Whatever username you pick at install time.)
