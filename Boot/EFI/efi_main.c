@@ -1,15 +1,13 @@
-/*
- *	Copyright (c) 2017 Brian Schnepp
- *	LICENSE: Apache 2.0. Refer to 'LICENSE' in the root of this project.
+/* 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  */
 
-#define mem_sz_proper_unit long long int
-
-struct kernel_position
-{
-	mem_sz_proper_unit* kernel_head;
-	//TODO
-}kernel_position;
+/*
+ *	Contributors:
+ *		Brian Schnepp
+ */
 
 
-int 
+//TODO

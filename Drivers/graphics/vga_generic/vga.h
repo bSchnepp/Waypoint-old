@@ -1,7 +1,15 @@
+/* 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ */
+
 /*
-Copyright (c) 2017 Brian Schnepp
-LICENSE: see 'LICENSE' in the root directory of this project.
-*/
+ *	Contributors:
+ *		Brian Schnepp
+ */
+
+
 
 #ifndef __VGA__DRIVER__H_
 #define __VGA__DRIVER__H_

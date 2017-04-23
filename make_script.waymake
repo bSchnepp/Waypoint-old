@@ -5,6 +5,8 @@ global variables:
 	VERSION_SUB_PATCH = 1
 	TARGET_PROCESSOR = -arch=x86-64
 	CFLAGS = -O3 -std=c11 -Werror -nostdlib -nostdinc -nostdinc++ -fno-builtin -ffreestanding
+
+	ASM = nasm
 end
 
 
