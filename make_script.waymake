@@ -1,32 +1,49 @@
-#!%progdata%/waymake.pro
-
-##Waymake is heavilly influenced by GNU/UNIX/whatever-you-want-to-call-it-its-the-same-thing make, unix shell scripting, and the Lua programming language. I'll **actually write it** later.
-
 global variables:
-CC = clang
-VERSION = 0
-VERSION_PATCH = 0
-VERSION_SUB_PATCH = 1
-TARGET_PROCESSOR = -arch=x86-64
-CFLAGS = -O3 -std=c11 -Werror -nostdlib -nostdinc -nostdinc++ -fno-builtin -ffreestanding
+	CC = clang
+	VERSION = 0
+	VERSION_PATCH = 0
+	VERSION_SUB_PATCH = 1
+	TARGET_PROCESSOR = -arch=x86-64
+	CFLAGS = -O3 -std=c11 -Werror -nostdlib -nostdinc -nostdinc++ -fno-builtin -ffreestanding
 end
 
 
-define klibc:
+define waybootmgr:
+
+local variables
+	string oem_name
+end
 
 do:
-	$(CC) $(CFLAGS) $(TARGET_PROCESSOR) include/klibc/ [*, -recursive]
+	##TODO
+end
+
+options:
+	##TODO
+end
+
+end
+
+define klibc:
+
+do:	[*, recursive]
+	$(CC) $(CFLAGS) $(TARGET_PROCESSOR) include/klibc/ 
 	
 end 
 end
 
-define kernel:
+define kernel:	[depends: klibc]
+	
+do:	[recursive]
+	waymake all
+	
+end 
+end
 
-depends:
-	klibc
-	
+define install [depends: kernel]
+
 do:
-	$(CC) $(CFLAGS) $(TARGET_PROCESSOR) src/ [*, -recursive]	##Meh, this program hasn't actually been written yet, so this will change soon I guess.
-	
-end end
+	##TODO: UTILIZE WRAPPING FOR DD AND FOR OTHER STUFF TO COPY TO FAT32 USB!!!
+end
+end
 

@@ -1,37 +1,81 @@
 # Waypoint
 
-Total rewrite of the barely functional "kernel" I wrote around a year ago. (and rewrote 2 years ago and so on)
-ie, making it do something beyond put a letter on the screen.
-
 Waypoint is a hobby project of mine, something to work on and add code to when I don't have anything else to really do.
-It's created also for the following reasons:
-  - I **really** like the MIT license. I'd like to force derivatives to also be open source, but drivers would be nice...
-  - Because the old one was __really__ bad. *__Very__* bad.
-  - Something that's trivial to port some existing programs over to.
-  - Have some fun with IPC and lower level stuff and all. Systems and graphics and everything is fun.
-  - Get something besides Android on my phone if I do make an ARM port, because it's fun.
-  - "I made that".
-  
-I'd like to also implement some specific features for Waypoint:
-  - UEFI-compatible bootloader. Something short, simple, GUIless, and easy to maintain.
-  - BTRFS file system support, or a custom filesystem specifically built for Waypoint.
-  - Some programming magic to get some Linux programs running on Waypoint ala WINE or LXSS.
-  - A modular kernel that's still quite monolithic, with an emphasis on making IPC **fast**. (Because it's easy to understand).
-  - A custom windowing system/compositior/thing, with Wayland support integrated.
-  - Ideally, a custom compiler and linker and assembler would be nice, but that's too much. So just clang + nasm.
-  - A custom shell, built from scratch, making sure it's *very* obvious Waypoint is it's own thing.
-  - A C standard library implementation specifically for Waypoint. 
+It's nothing big or professional like Linux, and for now, it's only going to run on amd64 (probably off USB 3.0 sticks, that's all I got spare right now).
+Just something to passively work on when I don't have other things to do. Filesystem might just end up being a reimplementation of ext4 too, or something. 
+Worst case scenario is only FAT32 support.
 
-Some notes and stuff:
-  - Files are files. They're not everything. Everything is an _object_, which is *usually* a file, but not **always**.
-  - What actually *are* files are run based on their extension. For example, 'waydll.dyn' is always a dynamic library, even if the file contents say otherwise, we disregard that. 'waypro.txt' is a text file, even if it has the PE/ELF/whatever I decide executable header.
-  - Locations are mounted based on drives. Not as folders in root and whatever. In this sense, we're **very** DOS-like.
+Total rewrite of the barely functional system I wrote around 3 years ago now.
+Since then, some ideas have changed:
+
+	- Waypoint is less UNIX-like than earlier versions that never got to anywhere acceptable.
+
+	- Waypoint is more "self-reliant": it will use it's own make system and it's own libc implementation, etc.
+
+	- Waypoint is more monolithic, rather than being a hybrid kernel. 
+
+	- Waypoint's kernel actually has a name: "Canine", a play on "k9", as this is the 9th rewrite. (That number is a (overestimated?) guess, I don't actually know how many rewrites I've done now.)
+
+___
+
+Waypoint has the following _absolute_ requirements:
+
+	- Provide a multitasking, preemtive environment with support for (flat) virtual memory. Rely on and assume a MMU is present.
+
+	- Portable to many different processor architectures, with amd64 support as an absolute priority. (Small layer to do all the cpu-specific stuff)
+
+	- Easilly adaptable for pretty much anyone to use by (FORCING?/utilizing) Unicode, at the very least internally.
+
+	- Scale well with symmetric multiprocessing systems: tasks should be allocated intelligently. (utilize multiple cores if present)
+
+	- Reasonable POSIX compliance, in an effort to port programs from my host system (Arch Linux) to Waypoint and be self-hosting.
+
+	- Be fairly secure. "Linux level" secure is an impossibility, but something reasonably close is the idea.
+
+	- Implement a bootloader which supports UEFI.
+
+	- Implement graphics as a 'core function' of the operating system. Graqphics must _always_ be present.
+
+
+
+And some general design guidelines:
+
+	- Extensibility:
+		Don't write code that's not easilly adaptable, extendable, or portable. Just don't. This is an obvious thing. It should be fairly simple to modify a module to add functionality.
+
+	- Reliability:
+		The user should never _ever_ see a Stop Error (or "Kernel Panic", same thing.) Do **absolutely everything** in your power to prevent a stop error from happening.
+		Never, ever, *ever*, should we **ever** allow a user-space program to tamper with the kernel or device drivers.
+		They should always communicate through system calls or some other mechanisms, but NEVER act on them themselves.
+
+	- Performance:
+		Absolutely sacrifice **everything** (within reason) to get things like multimedia players or video games to run as fast as possible. Any unnecessary tasks in the way being done by the system should be suspended or stopped in favor of making things like games to run *faster*. 
+
+
+___
+Waypoint isn't UNIX-like with it's filesystem structure.
+Instead, Waypoint organizes drives into "modules": totally separate trees where folders can be mounted as drives, but not vice-versa.
+As such, rather than '/dev/sda1/, we have "A:0/" (or A:/, as the :0 is implied).
+These letter-based drives however, are not 'special files' like in UNIX. They just... work.
+
+Switching between drives from the shell follows the DOS-style/EFI syntax.
 ```
-    A:/Waypoint/System/Kernel/ is a valid directory.
-```  
-  - A:/ is "root". We mount partitions like A:1/, A:2/, A:3/, etc. Separate SATA stuff is on B:/, C:/, etc. the :0 for the root is implied.
-  - Shell will probably look like this:
-```
- Brian@A:/Users/Brian/Desktop\>!: chdir A:/System/Waypoint/ && run "taskmgr.pro"
+	B:
 ```
 
+However, Waypoint isn't too similar to say, ReactOS, either. On Waypoint, "C:\" is _not_ the system drive, but rather, __*A:/*__ *always* is.
+Waypoint also mounts partitions (by default) as other "chunks" of the same module -- we can have A:/, A:1/, A:2/, B:/, B:1/, C:/, D:/, E:/, etc.
+These "modules", however, *never* "bleed" into each other. They are all separate, just 'exposed' as part of the same drive.
+
+The shell is still being thought up and designed and all, (all just scribble-notes, no code), and will probably look something like this:
+```
+ BRIAN-PC#Brian@A:/Users/Brian/Desktop/>+: chdir A:/System/Waypoint/ && run "taskmgr.pro"
+```
+A (barely) working "prototype" for MS-WINDOWS is in another repository, called JvShell.
+
+
+
+Waypoint should install with a couple users after installation:
+SYSTEM (equivalent to UNIX 'root')
+Administrator (Users and Groups are the same thing in Waypoint: a User inherits another User or multiple Users. This is essentially 'sudo' group.)
+(USERNAME) (Whatever username you pick at install time.)
