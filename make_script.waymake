@@ -1,51 +1,43 @@
-global variables:
-	CC = clang
-	VERSION = 0
-	VERSION_PATCH = 0
-	VERSION_SUB_PATCH = 1
-	TARGET_PROCESSOR = -arch=x86-64
-	CFLAGS = -O3 -std=c11 -Werror -nostdlib -nostdinc -nostdinc++ -fno-builtin -ffreestanding
-
-	ASM = nasm
-end
+## Just in case we go back to Waymake... for now, assume NetBSD bmake. [because licensing]
 
 
-define waybootmgr:
+## THIS IS A REFERENCE THING FOR ACTUALLY WRITING THE PROGRAM THAT GOES ALONG WITH THIS.
+## YOU CAN FIND THAT IN THE WAYMAKE REPO.
 
-local variables
-	string oem_name
-end
+CC = clang
+VERSION = 0
+VERSION_PATCH = 0
+VERSION_SUB_PATCH = 1
+TARGET_PROCESSOR = -arch=x86-64
+CFLAGS = -O3 -std=c11 -Werror -nostdlib -nostdinc -nostdinc++ -fno-builtin -ffreestanding
 
-do:
+ASM = nasm
+
+
+waybootmgr:
 	##TODO
-end
+	waymake Boot/EFI/Waymake -o /build/Boot/
 
-options:
-	##TODO
-end
+way_halcore:
+	$(ASM)	##TODO
 
-end
+klibc:
+	$(CC) $(CFLAGS) $(TARGET_PROCESSOR) include/klibc/ && waymake include/klibc/Waymake all
 
-define klibc:
+kernel: klibc
+	waymake Kernel/Waymake all
 
-do:	[*, recursive]
-	$(CC) $(CFLAGS) $(TARGET_PROCESSOR) include/klibc/ 
+libc:
+	$(CC) $(CFLAGS) $(TARGET_PROCESSOR) include/libc/ && waymake include/libc/Waymake all
 	
-end 
-end
+install: kernel libc
+	## Prompt for what device???
+	## UHHHHH
+	## Then we install to that!
+	local var_dev = $(SHELL-PROMPT: 'device')
+	## YAAAAAA
+	$(SYSTEM-B_COPY: var_dev, $(BUILD_DIR)/waybootmgr.bin, offset=0, rename="wayldr.pro")
+	$(SYSTEM-COPY) var_dev, $(BUILD_DIR)
+	$(SYSTEM-REMOVE) $(BUILD_DIR):"waybootmgr.bin"	## Delete the redundant copy
 
-define kernel:	[depends: klibc]
-	
-do:	[recursive]
-	waymake all
-	
-end 
-end
-
-define install [depends: kernel]
-
-do:
-	##TODO: UTILIZE WRAPPING FOR DD AND FOR OTHER STUFF TO COPY TO FAT32 USB!!!
-end
-end
-
+all: install
