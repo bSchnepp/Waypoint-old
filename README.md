@@ -7,6 +7,7 @@ Worst case scenario is only FAT32 support.
 
 Total rewrite of the barely functional system I wrote around 3 years ago now.
 Since then, some ideas have changed:
+
 	- Waypoint is less UNIX-like than earlier versions that never got to anywhere acceptable.
 	- Waypoint is more "self-reliant": it will use it's own make system and it's own libc implementation, etc.
 	- Waypoint is more monolithic, rather than being a hybrid kernel. 
@@ -14,6 +15,7 @@ Since then, some ideas have changed:
 ___
 
 Waypoint has the following _absolute_ requirements:
+
 	- Provide a multitasking, preemtive environment with support for (flat) virtual memory. Rely on and assume a MMU is present.
 	- Portable to many different processor architectures, with amd64 support as an absolute priority. (Small layer to do all the cpu-specific stuff)
 	- Easilly adaptable for pretty much anyone to use by (FORCING?/utilizing) Unicode, at the very least internally.
