@@ -9,14 +9,13 @@
  *		Brian Schnepp
  */
 
-#ifndef _KLIBC_STDIO_H_
-#define _KLIBC_STDIO_H_
+#ifndef _PANIC_H_
+#define _PANIC_H_
 
-void puts(char* str);
+void stop_error(int errorcode);
 
-struct FILE
-{
-	//TODO
-}FILE;
+void stop_error_extended(int errorcode);	//More specific details.
+
+void kernel_dump();	//Dumps to a log file. Switches to an emergency kernel before system shutdown.
 
 #endif
