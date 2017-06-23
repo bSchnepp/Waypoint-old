@@ -1,0 +1,33 @@
+This directory contains EFISTUB stuff.
+This is necessary in order to boot the kernel until FeralBoot is done, in which case this will be deprecated.
+
+It uses the libre-efi library, which I'l also developing to do this (avoid GNU-EFI)
+You may take libre-efi out and use it for your own projects.
+libre-efi is licensed under the zlib license, reproduced below (again) for clarity.
+
+Copyright (c) 2017 Brian Schnepp
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source distribution.
+
+
+
+___
+
+The Feral Efistub itself is under the same license as the rest of Feral/Waypoint: the MPL.
+See 'LICENSE' in the root directory of the project for details.

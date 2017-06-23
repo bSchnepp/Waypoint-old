@@ -11,7 +11,7 @@ Since then, some ideas have changed:
 	- Waypoint is less UNIX-like than earlier versions that never got to anywhere acceptable.
 	- Waypoint is more "self-reliant": it will use it's own make system and it's own libc implementation, etc.
 	- Waypoint is more monolithic, rather than being a hybrid kernel. 
-	- Waypoint's kernel actually has a name: "Canine", a play on "k9", as this is the 9th rewrite. (That number is a (overestimated?) guess, I don't actually know how many rewrites I've done now. I know I'm terrible at very low-level programming, and never got much further than a 'hello world!' kernel before.)
+	- Waypoint's kernel actually has a name: "Feral", as a reference to it's wild and unrestrained design.
 ___
 
 Waypoint has the following _absolute_ requirements:
@@ -29,15 +29,21 @@ Waypoint has the following _absolute_ requirements:
 And some general design guidelines:
 
 	- Extensibility:
-	Don't write code that's not easilly adaptable, extendable, or portable. Just don't. This is an obvious thing. It should be fairly simple to modify a module to add functionality. Any CPU-specific stuff needs to go into the hardware abstraction layer, and stay out of everything else. We want to simply port that layer to a new architecture, change the build target of the rest of the OS, and instantly have a (compiling, not necessarilly working) port done.
+	Don't write code that's not easilly adaptable, extendable, or portable. Just don't. This is an obvious thing. It should be fairly simple to modify a module to add functionality. Any CPU-specific 
+stuff needs to go into the hardware abstraction layer, and stay out of everything else. We want to simply port that layer to a new architecture, change the build target of the rest of the OS, and instantly 
+have a (compiling, not necessarilly working) port done.
 
 	- Reliability:
 	The user should never _ever_ see a Stop Error (or "Kernel Panic", same thing.) Do **absolutely everything** in your power to prevent a stop error from happening.
 	Never, ever, *ever*, should we **ever** allow a user-space program to tamper with the kernel or device drivers.
-	They should always communicate through system calls or some other mechanisms, but NEVER act on them themselves. Processes should have to use special system calls which aren't always granted to them to even know any other processes (other than system ones and dynamic libraries) even exist.
+	They should always communicate through system calls or some other mechanisms, but NEVER act on them themselves. Processes should have to use special system calls which aren't always granted to them 
+to even know any other processes (other than system ones and dynamic libraries) even exist.
 
 	- Performance:
-	Absolutely sacrifice **everything** (within reason) to get things like multimedia players or video games to run as fast as possible. Any unnecessary tasks in the way being done by the system should be suspended or stopped in favor of making things like games to run *faster*. Waypoint's main purpose overall is to create an operating system which can run video games with as minimal operating system overhead as humanly possible, while not totally handing control over to an application. Less bloat, more control, and always allocating almost all CPU time to games. (Every second, maybe give a couple milliseconds to background processes, always do that as well when the game does a system call. Ensure the game doesn't too badly dip in performance during this time.)
+	Absolutely sacrifice **everything** (within reason) to get things like multimedia players or video games to run as fast as possible. Any unnecessary tasks in the way being done by the system should
+ be suspended or stopped in favor of making things like games to run *faster*. Waypoint's main purpose overall is to create an operating system which can run video games with as minimal operating system 
+overhead as humanly possible, while not totally handing control over to an application. Less bloat, more control, and always allocating almost all CPU time to games. (Every second, maybe give a couple 
+milliseconds to background processes, always do that as well when the game does a system call. Ensure the game doesn't too badly dip in performance during this time.)
 
 
 ___
@@ -59,7 +65,7 @@ The shell is still being thought up and designed and all, (all just scribble-not
 ```
  BRIAN-PC#Brian@A:/Users/Brian/Desktop/>+: chdir A:/System/Waypoint/ && run "taskmgr.pro"
 ```
-A (barely) working "prototype" for New Technology-like systems (including ReactOS) is in another repository, called JvShell. It's very much broken, not working as intended, and is an utter mess.
+A (barely) working "prototype" for New Technology-like systems (ie, ReactOS) is in another repository, called JvShell. It's very much broken, not working as intended, and is an utter mess.
 
 
 Waypoint should install with a couple users after installation:

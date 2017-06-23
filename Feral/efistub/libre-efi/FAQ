@@ -1,0 +1,17 @@
+Q: Why not patch GNU-EFI for clang support?
+	Wanted to learn the internals of UEFI in a way that was very clear.
+	(Also because licensing, not 256% sure "THIS IS ALL BSD LICENSED" so I'd rather not.)
+
+Q: Why version 2.7? Doesn't your test hardware only support 2.5?
+	I plan to get a new machine powered by Team Red's Zen CPU soon, which would have 2.7
+	most likely. Waypoint's EFISTUB will avoid any super advanced features anyway.
+
+Q: Will programs intended to compile against GNU-EFI work on libre-efi?
+	Possibly, possibly not. No idea.
+
+Q: Is it "libre-efi", "LIBRE-EFI", or "Libre-EFI"?
+	It doesn't really matter to me.
+
+Q: Why isn't this called "FreedomEFI"?
+	Because that would be putting too much "FreedomX" into everything where it doesn't matter.
+	FreedomX should be for things on Waypoint, not for things like this.

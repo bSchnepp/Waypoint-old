@@ -1,3 +1,6 @@
+#if 0	//No longer being used, kept as reference to create new stuff.
+
+
 /* 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -35,7 +38,7 @@ struct WayFrame
 #include <string.h>
 
 //Bind this into kernel later...
-#include <canine.h>
+#include <feral.h>
 
 
 WayProcess* SpawnProcess(wchar_t* name);	//TODO for this... Child process is always dependant on parent, yada yada.
@@ -46,5 +49,7 @@ void CreateDirectory(wchar_t* parent, wchar_t* name, int permissions);	//We'll n
 
 
 WayProcess* Fork();	//For compatibility with *NIX systems.
+
+#endif
 
 #endif

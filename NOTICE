@@ -1,9 +1,9 @@
 NOTICE
 ___
 
-For absolute clarity, creating userspace programs that use the kernel through it's system calls is considered NORMAL USE of this program.
-Distributing programs which use the kernel through this intended purpose are NOT considered as 'Larger Works' and can be distributed freely.
-You do NOT need to ship a copy of Waypoint (or it's source code) along with your userspace programs.
+For absolite clarity, creating userspace programs that use the kernel through it's system calls, or through the library provided to create Waypoint programs 
+are considered as NORMAL USE of the program.
+You do not need to ship a copy of Waypoint or it's source code along with your userspace programs.
 
-Anything that goes into the kernel however, IS a Larger Work (when redistributed), such as (kernel-space) filesystems, device drivers, etc.
-Again, the terms of the MPL apply there. See 'LICENSE' for the exact terms.
+Programs that are included into the kernel (typically drivers) are larger works. 
+See 'LICENSE' for the exact terms.

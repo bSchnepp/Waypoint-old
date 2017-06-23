@@ -1,0 +1,5 @@
+shell = %progdata%/Waypoint/LightningShell/lightningshell.pro
+##Elevate is essentially 'sudo' for Waypoint.
+
+main:
+	elevate pkgmgr -S base-devel bmake

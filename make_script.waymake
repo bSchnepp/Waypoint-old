@@ -35,7 +35,6 @@ install: kernel libc
 	## UHHHHH
 	## Then we install to that!
 	local var_dev = $(SHELL-PROMPT: 'device')
-	## YAAAAAA
 	$(SYSTEM-B_COPY: var_dev, $(BUILD_DIR)/waybootmgr.bin, offset=0, rename="wayldr.pro")
 	$(SYSTEM-COPY) var_dev, $(BUILD_DIR)
 	$(SYSTEM-REMOVE) $(BUILD_DIR):"waybootmgr.bin"	## Delete the redundant copy

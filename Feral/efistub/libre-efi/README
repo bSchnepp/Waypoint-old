@@ -1,0 +1,42 @@
+# libre-efi
+
+## What is LIBRE-EFI?
+libre-efi is a small library intending to implement version 2.7 of the UEFI specification in a 
+manner that is friendly to *NIX systems and to Waypoint.
+
+It is licensed under the zlib license: see 'LICENSE' for details.
+
+libre-efi is intended to work excellently with clang, as neither Tianocore or GNU-EFI directly support
+clang at the moment. Since the only compiler I'm porting to Waypoint is clang, this is necessary to make it self-hosting eventually.
+
+The intent is to eventually create a clean implementation of UEFI in such a manner that a Feral kernel
+can utilize the library so that it can itself be a UEFI application (and hence not require a bootloader).
+
+## Building applications with LIBRE-EFI
+libre-efi should generally work similarly to GNU-EFI: the simplest program possible would be:
+```
+#include <efi.h>
+#include <efilib.h>
+
+EFI_STATUS EFIAPI efi_main(EFI_HANDLE imgHdl, EFI_SYSTEM_TABLE* sysTbl)
+{
+	InitializeLib(imgHdl, sysTbl);	//Allows access to BootServices and whatnot without wrappers.
+					//We want to minimalize the need to do something like uefi_call_wrapper(gBT->[FUNCTION_HERE], [NUMBER HERE]) as much as possible.
+	Print(L"Hello, libre-efi world!\n");	
+	return EFI_SUCCESS;
+}
+```
+
+## Status
+libre-efi is in early development, not much done. Working on it.
+
+Currently, I'm going through the specification, writing down struct definitions, and fixing it all up later in order to
+get something that compiles.
+
+## Building libre-efi
+libre-efi requires bmake. This is to ensure that it will build on Waypoint in the future with no modification to the makefiles.
+Inside the 'deps' folder are scripts which will automate installing those on the relevant platforms.
+
+After that, return to this directory and just type in the command 'make' (or 'bmake' if not your system default).
+There should be an archive and some other runtime objects that are produced in the builds/ folder.
+Link against these to produce the relevant EFI-compatible binaries.

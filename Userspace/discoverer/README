@@ -1,0 +1,61 @@
+Default graphical shell.
+This folder is a placeholder, pretty much just to say 'this is where user-space programs should go' and all.
+When we get around to it, this should be the first user-space program that isn't technically necessary for the OS to run.
+
+
+OWaysys should do GUI objects as such
+
+Program creates a GuiInstance class.	[Connection to the GUI system, where things like colors and classes and all are stored.]
+Program registers GuiInstance class to Discoverer.
+Discoverer then tells the kernel about this new GUI in some way or something.
+Program creates a WayFrame class, and registers it with GuiInstance.
+Program modifies the WayFrame class to it's liking.
+Program calls the kernel to display it's frame.
+
+Frame is drawn to screen.
+
+Program creates a GuiPane or derivative classes.	[Again, we're still written in C, so when I say 'class' and 'object', think 'ReactOS'-like.]
+Program draws to GuiPane however it wishes, if the GuiPane allows for programs to modify it.
+Each update triggers Discoverer to update the offscreen buffer holding it, which then is drawn to screen by the kernel, which then triggers update events and all that.
+
+Discoverer handles creating the actual Frame object, the components inside of it's buffers, and how they are eventually composited to be rendered by the kernel.
+Discoverer should also store things like frame positions, cursors, etc. etc. Figure this out later. Priority is bootloader and working kernel with some memory management and
+a filesystem it can read.
+
+
+Refine this process later.
+GUI should be pretty different to how X11 GUIs work.
+Similar enough so that somebody else can port GTK and Qt to it, but I'm not.
+Discoverer is preetttyy closely tied into the architecture for Waypoint overall.
+Find a way to modularize this so if someone takes Waypoint and wants to use it for
+creating a fork to run on smartphones and all, they can simply replace the GUI modules
+and it'd be pretty much OK, with the same calls but doing different things and all.
+
+In order for that to work, the objects (of which classes are derived) should be
+fairly deep and thorough with implementation. Avoid ambiguity.
+
+
+Discoverer should also be a file manager!
+Why not?
+
+All applications that don't forcefully create their own interfaces must obey the theming rules of /System/Preferences/theme.css
+The only way around this is supplying your own CSS theme for the application, which is bound at startup-time,
+or to draw your UI in Vulkan or something. [We want to support Vulkan one way or another: OpenGL is really just a wrapper over Vulkan here.]
+Compositing done in Vulkan, lots of work to do once we get a working CLI and all and finally build the GUI.
+
+GUIs on Waypoint have some properties:
+	- Everything is a vector.
+	- If it isn't a vector, then it's a class which is a 2D vector box which samples it's colors from a bitmap so it IS a vector.
+	- Programs cannot expect to know anything about window decorations (other than being told their events),
+	- Nor can they always expect a specific size unless made non-resize and given an initial size.
+	  (Do realize that desktop Waypoint will abide by that size request. Mobile forks can do whatever, ie, ignore it.)
+
+___
+
+"FRAME" means the final rectangle on screen.
+"PANE" means a subcomponent inside of that rectangle, which isn't the frame decorations bar.
+"TOP BAR" means the decorations bar.
+"TOP BUTTONS" means the buttons on the top bar.
+
+expect this to take 6 - 10 years to get working!
+[Maybe it'll actually go somewhere like ToaruOS though, or even better, [GNU/BSD/other user space]/Linux, but who knows.]

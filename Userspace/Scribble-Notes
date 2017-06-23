@@ -1,0 +1,5 @@
+//Waypoint loads executables called from command line located in A:/Program Files/, based on the >>FOLDER<< name. If need subdirectory, append the folder name with a dash, ie, blender_foundation-blender
+//If the folder in Program Files has a space, replace with an underscore.
+//If more than one executable in the folder, then find the one with the same name as the folder with underscores or dashes instead of spaces.
+//If still not present, query if the user wants to use the executable in the folder with the closest name, using string diffs for it.
+//Remember, on the command line, we ignore the extensions. 'clang.pro' is just 'clang' from command line, ala *DOS.

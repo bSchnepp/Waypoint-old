@@ -1,0 +1,101 @@
+Just some scratch notes for goals, directions, etc. etc.
+These aren't well thought-out, just random things that would be nice to eventually have and make work.
+Expect ideas to change, be manipulated, or outright removed over time. Lots of things are really far away dreams that won't happen.
+
+	- Multitasking, preemptive.
+	
+	- Distributed computing:
+		- Support a bytecode language so that applications can be compiled once, run anywhere.
+		- Said bytecode would be ahead-of-time compiled for the machines running it. Limitation that said (compiled) program can only run on the same CPU architecture.
+		- Allow for tasks to be distributed over network. Figure out ways to minimize latency, and improve reliability.
+		- Somehow find a way to allow tasks to be reallocated if the machine currently running it goes down.
+		- Keep it local, don't do it over the Internet.
+		- This is intended mainly for gaming purposes: the dream is to allow game developers to have core parts of game logic be perfectly fine with 120 threads or something HUGE like that. Waypoint manages accordingly.
+		- Allow for sharing of graphics hardware as well: your 1.3Ghz 2-core CPU with integrated graphics can run AAA games just fine, with it's 2 cores being used for performance-critial stuff.
+			(Figure that out based on what threads have the most async stuff done on them). Graphics hardware is essentially piped over network, kinda like KVM, but not really. Same idea.
+		- Attract gamers, which is the primary purpose of this OS: real-time 3D with Vulkan.
+
+	- 64-bit. Don't even bother with IA-32.
+
+	- UEFI support.
+
+	- Vulkan as a core component of the OS. All distributions of Waypoint should support Vulkan.
+
+	- PORTABLE to AArch64, and other architectures which implement UEFI (and some that don't provided hardabs.dyn is rewritten + bootloader created)
+
+	- FeralFS with SECURITY and RELIABILITY in mind:
+		- Some way of recovering files. Ideally, we want a cache to copy diffs of files to for recent times, do data deduplication, support hidden encryption (can be transferred to another computer by just inputting in the username + password of the owner of the drive. If SYSTEM, then it's whoever mounted it first. If shared between multiple users... uhhhh...??????
+
+	- VERY STABLE DRIVER API.
+		- We're fine with binary-only drivers but will prefer FOSS drivers.
+		- We're NOT going under the GPL, ever. Especially not the GPLv3. Want to stay friendly with hardware manufacturers. Possibly LGPL. Unlikely.
+
+	- Very modular kernel, but ultimately monolithic. Aim to push performance as much as possible. Async system call interface. Other magic stuff.
+
+	- Support for 'personalities' like microkernels do, implemented as a dynamic layer (csrss).
+
+	- Partial POSIX compliance, in an effort to port things from *NIX systems (specifically clang and BSD make) to Waypoint.
+
+	- EVERYTHING IS AN OBJECT, WHICH CAN BE CLASSIFIED BY PROGRAMS.
+
+	- OBJECTS/CLASSES CAN BE REGISTERED IN A SYSTEM REGISTRY.
+
+	- Waypoint is specifically built for 3D gaming in mind.
+
+	- Assume Waypoint is running on flash media (SSDs, USB sticks, etc.) FeralFS isn't meant for hard drives.
+		- Filesystem should have fast access times. Avoid the mess of going through all over the system just to find the right file.
+		- (Relational stuff built-in, kinda like BeFS?)
+
+	- Write our own graphics drivers where needed. Port from Mesa when not needed.
+
+	- Design for the future, not care about backwards compatibility other than what's necessary.
+
+	- Assume malware will be written for Waypoint very quickly and over the smallest exploits. Design security accordingly.
+		- Check and double check code.
+		- Safety kernel option, to make sure everything adds up and all when doing anything important.
+		- And lockdown features to completely disable distributed work, disable anything that could remotely pose a security risk, and pretty much make any meaningful action require Admin permission.
+		- Interrupt programs during execution (and happen to not return until 'yes' is clicked) for every possible critical security risk when said feature is enabled.
+		- Ensure everything above in this mini-list is optional, NOT default, and must be configured at compile-time.
+	
+	- Custom TCP/IP stack, lots of work to do here... Maybe borrow code from FreeBSD.
+
+	- Don't let just any program know what else is on the system, unless a program explicitly wants other programs to know it's running (ie, a userspace audio server)
+
+	- Implement a 'Global Administrator' account or something: Local Admin doesn't allow sharing over network and all. Essentially, Local Admin becomes useless if on network.
+
+	- Users should have their files inside of A:/Users/USERNAME/
+		- And for other drives, two things must be the case:
+			- The whole drive is public [DANGEROUS] or explicitly registered to one user [SAFER]
+			- Transparently, we create a /Users/USERNAME whenever someone accesses that drive, and only allow write there. [SAFEST]
+		- That must be decided at mount-time. Create a metadata file called 'Sysvolinfo.wpt' for what to do with it. Register UUIDs?
+		- Users **CAN** save elsewhere, but not be able to access A:/Waypoint/System or A:/Waypoint/Users/ANYONE_ELSE_WITHOUT_PERMISSIONS
+
+	- Do everything we can to prevent the system from ever going down. Reliability as a core focus. If necessary, maybe even load up a recovery kernel silently and pipe current kernel into that.
+
+	- Design kernel with extensibility in mind: Download update, update kernel, no reboot, ala Linux.
+
+	- Applications which do require Administrator permisions should list what specific permissions they need.
+		- Figure out a way to split up 'SYSTEM' as a bunch of permission nodes or something...?
+
+	- Enforce unicode wherever we can.
+		- Somehow find a way to make sure that files on Waypoint that shouldn't be UTF-8 aren't, ie, source code files.
+		- Don't strongarm programs into following this. Just internally across the system.
+
+	- Installer creates a NORMAL PERMISSION ACCOUNT, AND PASSWORD IS REQUIRED TO RUN AS ADMINISTRATOR.
+		- And by default, accounts aren't created with Administrator-able permissions. Only first user by default, everyone else manually.
+		- Program called 'elevate' to act as essentially 'sudo'. 'elevate-global' for "Global Administrator".
+
+	- Package manager as pretty much a copy of Arch Linux's, because it's WONDERFUL.
+
+	- AUR-like/ports-like system would be great.
+
+	- The base system should remain as FREE SOFTWARE. This logic, at least in userspace, works great on Linux systems. Everything else (drivers or installed programs) is not guaranteed.
+
+	- Drivers must be installed with Global Administrator permissions. How would this work with just local though? Hmmm...
+
+	- When joining instance of network PC (distributed system), the 'host' aims to minimize as many of it's local processes as possible, prioritizing heavier ones.
+		- Newly joined ones simply ask host (if no one else on) for these programs, and if there is, ask the closest one for a copy of everything.
+		- Joining host requires password in whichever direction is more secure. Local user of guest system can't really do anything but request shutdown or request leave.
+			[DANGER here in only having 1 where offloaded programs go to... Perhaps sync every couple minutes on host, avoid time spent on that process?]
+		- Intended use is to allow multiple PCs owned by the same person to be used to (technically) increase available power to their host machine.
+			- Possibly to even bolster things like games, running threads on other machines to do things like physics???
