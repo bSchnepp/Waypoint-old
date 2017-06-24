@@ -14,6 +14,8 @@ typedef unsigned long int UINT64;
 typedef unsigned int UINT32;
 typedef unsigned short UINT16;
 typedef unsigned char UINT8;
+
+typedef void VOID;
 #endif
 
 #if defined(__aarch64__) || defined(__arm__)

@@ -1,7 +1,7 @@
 #ifndef _FERAL_STATUS_H_
 #define _FERAL_STATUS_H_
 
-#include "../feral/feralobjs.h"
+#include "feral/feralobjs.h"
 
 #ifdef __cplusplus
 extern "C" 
