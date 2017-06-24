@@ -10,13 +10,24 @@
 #ifndef _LIBRE_EFI_ACPI_INCLUDE_
 #define _LIBRE_EFI_ACPI_INCLUDE_
 
-#define EFI_ACPI_20_TABLE_GUID						\
+
+typedef struct
+{
+	UINT32 Data1;
+	UINT16 Data2;
+	UINT16 Data3;
+	UINT8  Data4[8];
+}EFI_GUID;
+
+
+
+/*#define EFI_ACPI_20_TABLE_GUID						\
 	{								\
 		0x8868E871, 0xE4F1, 0x11D3, 				\
 		{							\
 		 	0xBC, 0x22, 0x00, 0x80, 0xC7, 0x3C, 0x88, 0x81	\
 		}							\
-	}
+	}*/
 		 
 #define ACPI_TABLE_GUID							\
 	{								\

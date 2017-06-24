@@ -1,0 +1,6 @@
+What needs to be done:
+	Create scripts to automate building Gallium and Mesa as a Waypoint driver.
+	Possibly port Gallium+Mesa to Waypoint by hand
+
+And first:
+	Actually creating the driver interface

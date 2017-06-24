@@ -115,6 +115,7 @@ typedef int8_t     INT8;
 
 typedef __WCHAR_TYPE__ WCHAR;
 typedef WCHAR CHAR16;
+typedef uint8_t CHAR8;
 
 
 #undef VOID
