@@ -29,6 +29,7 @@
 #include "efigpt.h"
 
 #include "efibootservices.h"
+#include "efiruntimeservices.h"
 
 
 #include "efidecl.h"	//This should be close to last if not last.

@@ -40,3 +40,6 @@ Inside the 'deps' folder are scripts which will automate installing those on the
 After that, return to this directory and just type in the command 'make' (or 'bmake' if not your system default).
 There should be an archive and some other runtime objects that are produced in the builds/ folder.
 Link against these to produce the relevant EFI-compatible binaries.
+
+If you are taking just individual files of libre-efi and reusing them, go ahead and just slap the license into the top multi-line
+comment of whichever files you want if that is more convenient for you.
