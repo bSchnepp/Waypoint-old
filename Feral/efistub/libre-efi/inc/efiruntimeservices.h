@@ -170,6 +170,15 @@ typedef struct
 	EFI_STATUS CapsuleStatus;
 }EFI_CAPSULE_RESULT_VARIABLE_HEADER;
 
+typedef struct 
+{
+	UINT16 Version;
+	UINT8 PayloadIndex;
+	UINT8 UpdateImageIndex;
+	EFI_GUID UpdateImageTypeId;
+
+}EFI_CAPSULE_RESULT_VARIABLE_FMP;
+
 typedef EFI_STATUS SetVirtualAddressMap(IN UINTN MemoryMapSize, IN UINTN DescriptorSize, IN UINT32 DescriptorVersion, IN EFI_MEMORY_DESCRIPTOR* VirtualMap);
 
 /* From what I'm understanding, this is for physical --> virtual only. */
