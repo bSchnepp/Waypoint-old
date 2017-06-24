@@ -374,6 +374,94 @@ typedef EFI_STATUS (EFIAPI *EFI_UNINSTALL_MULTIPLE_PROTOCOL_INTERFACES)(
 /** Section 7.4: Image services. **/
 /* PDF page 312 */
 
+typedef EFI_STATUS (EFIAPI *EFI_IMAGE_LOAD)(
+        IN BOOLEAN BootPolicy,
+        IN EFI_HANDLE ParentImageHandle,
+        IN EFI_DEVICE_PATH_PROTOCOL* DevicePath,
+        IN VOID* SourceBuffer OPTIONAL,
+        IN UINTN SourceSize,
+        OUT EFI_HANDLE* ImageHandle
+);
+
+/* Transfers control to relevant program loaded by ImageLoad() */
+typedef EFI_STATUS (EFIAPI *EFI_IMAGE_START)(
+        IN EFI_HANDLE ImageHandle,
+        OUT UINTN* ExitDataSize,
+        OUT CHAR16** ExitData OPTIONAL
+);
+
+/* Unloads a function if it's been loaded with ImageLoad(). If done on one with StartImage(), calls the Unload() function. */
+typedef EFI_STATUS (EFIAPI *EFI_IMAGE_UNLOAD)(
+        IN EFI_HANDLE ImageHandle
+);
+
+/* Entry point to UEFI applications. */
+typedef EFI_STATUS (EFIAPI *EFI_IMAGE_ENTRY_POINT)(
+        IN EFI_HANDLE ImageHandle
+        IN EFI_SYSTEM_TABLE* SystemTable
+);
+
+/* Terminates control from UEFI program and returns to the firmware. */
+typedef EFI_STATUS (EFIAPI *EFI_EXIT)(
+        IN EFI_HANDLE ImageHandle,
+        IN EFI_STATUS ExitStatus,
+        IN UINTN ExitDataSize,
+        IN CHAR16* ExitData OPTIONAL
+);
+
+/* Really really really shuts down boot services. Needed by OS loaders. */
+typedef EFI_STATUS (EFIAPI *EFI_EXIT_BOOT-SERVICES)(
+        IN EFI_HANDLE ImageHandle,
+        IN UINTN MapKey
+);
 
 
+
+/** Misc. boot services, PDF page 327. **/
+
+/* Watchdog timer. Usually set to 5 minutes since boot. Once it goes off, the system WILL reset (ie, reboot). ExitBootServices() terminates it. */
+typedef EFI_STATUS (EFIAPI *EFI_SET_WATCHDOG_TIMER)(
+        IN UINTN Timeout,
+        IN UINT64 WatchdogCode,
+        IN UINTN DataSize,
+        IN CHAR16* WatchdogData OPTIONAL
+);
+
+/* Stalls the system. Input is in microseconds. Multiply by 1000000 to get seconds. */
+typedef EFI_STATUS (EFIAPI *EFI_STALL)(
+        IN UINTN Microseconds
+);
+
+/* Copies Length bytes from Source buffer into Destination buffer. Ensure there is enough memory there. */
+typedef VOID (EFIAPI *EFI_COPY_MEM)(
+        IN VOID* Destination,
+        IN VOID* Source,
+        IN UINTN Length
+);
+
+/* Fills a buffer of size Size with Value at every 8-bit entry. */
+typedef VOID (EFIAPI *EFI_SET_MEM)(
+        IN VOID* Buffer,
+        IN UINTN Size,
+        IN UINT8 Value
+);
+
+/* Number that increases on each call. Top 32 bits are non-volatile and only increase when system is reset or lower overflows. */
+typedef EFI_STATUS (EFIAPI *EFI_GET_NEXT_MONOTONIC_COUNT)(
+        OUT UINT64* Count
+);
+
+
+/* Adds, updates, or removes from EFI configuration table (in EFI System Table) */
+typedef EFI_STATUS (EFIAPI *EFI_INSTALL_CONFIGURATION_TABLE)(
+        IN EFI_GUID* Guid,
+        IN VOID* Table
+);
+
+/* Computes the CRC32 hash of a particular buffer. */
+typedef EFI_STATUS (EFIAPI *EFI_CALCULATE_CRC32)(
+        IN VOID* Data,
+        IN UINTN DataSize,
+        OUT UINT32* Crc32
+);
 #endif

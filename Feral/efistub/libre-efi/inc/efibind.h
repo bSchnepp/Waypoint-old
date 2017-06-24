@@ -173,17 +173,18 @@ typedef uint8_t CHAR8;
 		return InitFunction(ImageHandle, SystemTable);\
 	}	\
 	\
-	EFI_STATUS efi_main(EFI_HANDLE image, EFI_SYSTEM_TABLE* table) __attribute__((weak, alias \
-("InitializeDriver")));
+	EFI_STATUS efi_main(EFI_HANDLE image, EFI_SYSTEM_TABLE* table) __attribute__((weak, alias ("InitializeDriver")));
 
-#define LOAD_INTERNAL_DRIVER(_if, type, name, entry)	\
-	(_if)->LoadInternal(type, name, entry)
+#define LOAD_INTERNAL_DRIVER(_if, type, name, entry) (_if)->LoadInternal(type, name, entry)
 
 
 #define INTERFACE_DECL(x) struct x
 
 
-/* Prototypes of internal stuff to play nice with MSABI. */
+/* 
+	Prototypes of internal stuff to play nice with MSABI. 
+	We compile with Clang... do we even need this?
+*/
 UINT64 efi_call0(void* func);
 UINT64 efi_call1(void* func, UINT64 arg1);
 UINT64 efi_call2(void* func, UINT64 arg1, UINT64 arg2);
