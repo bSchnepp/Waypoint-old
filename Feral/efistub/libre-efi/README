@@ -42,4 +42,5 @@ There should be an archive and some other runtime objects that are produced in t
 Link against these to produce the relevant EFI-compatible binaries.
 
 If you are taking just individual files of libre-efi and reusing them, go ahead and just slap the license into the top multi-line
-comment of whichever files you want if that is more convenient for you.
+comment of whichever files you want if that is more convenient for you, if you absolutely need to. As long as it's obvious (explicitly stated) that it's
+not the original, that's good enough.

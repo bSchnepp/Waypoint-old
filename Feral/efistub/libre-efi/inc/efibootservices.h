@@ -115,30 +115,30 @@ typedef struct
 
 
 //Come back to this...
-typedef EFI_STATUS (EFIAPI *EFI_CREATE_EVENT)(IN UINT32 Type, IN EFI_TPL NotifyTpl, IN EFI_EVENT_NOTIFY NotifyFunction, OPTIONAL IN VOID* NotifyContext, OPTIONAL OUT EFI_EVENT* Event);	
+typedef EFI_STATUS ((EFIAPI *EFI_CREATE_EVENT)(IN UINT32 Type, IN EFI_TPL NotifyTpl, IN EFI_EVENT_NOTIFY NotifyFunction, OPTIONAL IN VOID* NotifyContext, OPTIONAL OUT EFI_EVENT* Event));	
 
-typedef VOID (EFIAPI *EFI_EVENT_NOTIFY)(IN EFI_EVENT Event, IN VOID* Context);
+typedef VOID ((EFIAPI *EFI_EVENT_NOTIFY)(IN EFI_EVENT Event, IN VOID* Context));
 
-typedef EFI_STATUS (EFIAPI *EFI_CREATE_EVENT_EX)(IN UINT32 Type, IN EFI_TPL NotifyTpl, IN EFI_EVENT_NOTIFY NotifyFunction OPTIONAL, IN CONST VOID* NotifyContext OPTIONAL, IN CONST EFI_GUID* EventGroup OPTIONAL, OUT EFI_EVENT* Event);
+typedef EFI_STATUS ((EFIAPI *EFI_CREATE_EVENT_EX)(IN UINT32 Type, IN EFI_TPL NotifyTpl, IN EFI_EVENT_NOTIFY NotifyFunction OPTIONAL, IN CONST VOID* NotifyContext OPTIONAL, IN CONST EFI_GUID* EventGroup OPTIONAL, OUT EFI_EVENT* Event));	//?????
 
-typedef EFI_STATUS (EFIAPI *EFI_CLOSE_EVENT)(IN EFI_EVENT Event);
+typedef EFI_STATUS ((EFIAPI *EFI_CLOSE_EVENT)(IN EFI_EVENT Event));
 
-typedef EFI_STATUS (EFIAPI *EFI_SIGNAL_EVENT)(IN EFI_EVENT Event);
+typedef EFI_STATUS ((EFIAPI *EFI_SIGNAL_EVENT)(IN EFI_EVENT Event));
 
 /* (PDF) Page 242 of EFI spec 2.7 */
 
-typedef EFI_STATUS (EFIAPI *EFI_WAIT_FOR_EVENT)(INT UINTN NumberOfEvents, IN EFI_EVENT* Event, OUT UINTN* Index);
+typedef EFI_STATUS ((EFIAPI *EFI_WAIT_FOR_EVENT)(IN UINTN NumberOfEvents, IN EFI_EVENT* Event, OUT UINTN* Index));
 
 /* Check event if it's in signaled state or not. */
-typedef EFI_STATUS (EFIAPI *EFI_CHECK_EVENT)(IN EFI_EVENT Event);
+typedef EFI_STATUS ((EFIAPI *EFI_CHECK_EVENT)(IN EFI_EVENT Event));
 
 
 //From here, we just replace tabs with 8 spaces. FINE.
-typedef EFI_STATUS (EFIAPI *EFI_SET_TIMER)(
+typedef EFI_STATUS ((EFIAPI *EFI_SET_TIMER)(
         IN EFI_EVENT Event,	//Defined in CreateEvent()...
         IN EFI_TIMER_DELAY Type,
         IN UINT64 TriggerTime
-);
+));
 
 /* Raises a task's TPL, returns previous TPL.  */
 typedef EFI_TPL (EFIAPI *EFI_RAISE_TPL)(
@@ -212,12 +212,12 @@ typedef EFI_STATUS (EFIAPI *EFI_GET_MEMORY_MAP)(
 typedef EFI_STATUS (EFIAPI *EFI_ALLOCATE_POOL)(
         IN EFI_MEMORY_TYPE PoolType;
         IN UINTN Size;
-        OUT VOUD** Buffer;
+        OUT VOID** Buffer;
 );
 
-typedef EFI_STATUS (EFIAPI *EFI_FREE_POOL)(
+typedef EFI_STATUS ((EFIAPI *EFI_FREE_POOL)(
         IN VOID* Buffer;
-);
+));
 
 
 
@@ -248,7 +248,7 @@ typedef struct
 
 typedef EFI_STATUS (EFIAPI *EFI_INSTALL_PROTOCOL_INTERFACE)(
         IN OUT EFI_HANDLE* Handle,
-        IN EFI_GUID8 Protocol,
+        IN EFI_GUID* Protocol,
         IN EFI_INTERFACE_TYPE InterfaceType,
         IN VOID* Interface
 );
@@ -259,7 +259,7 @@ typedef EFI_STATUS (EFIAPI *EFI_UNINSTALL_PROTOCOL_INTERFACE)(
         IN VOID* Interface
 );
 
-typedef EFI_STATIS (EFIAPI *EFI_REINSTALL_PROTOCOL_INTERFACE)(
+typedef EFI_STATUS (EFIAPI *EFI_REINSTALL_PROTOCOL_INTERFACE)(
         IN EFI_HANDLE Handle,
         IN EFI_GUID *Protocol,
         IN VOID* OldInterface,
@@ -410,7 +410,7 @@ typedef EFI_STATUS (EFIAPI *EFI_EXIT)(
 );
 
 /* Really really really shuts down boot services. Needed by OS loaders. */
-typedef EFI_STATUS (EFIAPI *EFI_EXIT_BOOT-SERVICES)(
+typedef EFI_STATUS (EFIAPI *EFI_EXIT_BOOT_SERVICES)(
         IN EFI_HANDLE ImageHandle,
         IN UINTN MapKey
 );

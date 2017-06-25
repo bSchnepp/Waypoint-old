@@ -58,22 +58,6 @@ typedef struct
 	UINT32 Flags;
 }EFI_VARIABLE_AUTHENTICATION_3;
 
-/* Defined in PDF page 365 */
-typedef struct
-{
-	UINT16 Year; //1990 - 20XX.
-	UINT8 Month; //1 - 12
-	UINT8 Day; //1 - 31
-	UINT8 Hour;	//0 - 23
-	UINT8 Minute;	//0 - 59
-	UINT8 Second;	//0 - 59
-	UINT8 Pad1;
-	UINT32 Nanosecond;	// 0 - 999999999
-	INT16 TimeZone;	//-1440 to 1440 or 2047 Subtract UTC time with this.
-	UINT8 Daylight;
-	UINT8 Pad2;
-}EFI_TIME;
-
 typedef struct 
 {
 	UINT32 Resolution;
@@ -170,7 +154,7 @@ typedef struct
 	EFI_STATUS CapsuleStatus;
 }EFI_CAPSULE_RESULT_VARIABLE_HEADER;
 
-typedef struct 
+typedef struct //~387 in PDF.
 {
 	UINT16 Version;
 	UINT8 PayloadIndex;
