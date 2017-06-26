@@ -1,3 +1,0 @@
-This folder contains scripts to automake downloading the dependencies you need.
-
-Run the appropriate script based on the script's prefix (way--- for Waypoint, arch--- for Arch Linux, deb---- for Debian-based systems, etc.)
