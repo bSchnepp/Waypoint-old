@@ -353,7 +353,41 @@ typedef struct
 	EFI_STATUS QueryVariableInfo;
 }EFI_RUNTIME_SERVICES;
 
-/* 
+
+typedef struct
+{
+	INT32 MaxMode;
+	
+	//Current settings...
+	INT32 Mode;
+	INT32 Attribute;
+	INT32 CursorColumn;
+	INT32 CursorVisible;
+}SIMPLE_TEXT_OUTPUT_MODE;
+
+
+typedef struct EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL
+{
+	EFI_STATUS Reset;
+	EFI_STATUS OutputString;
+	EFI_STATUS TestString;
+	EFI_STATUS QueryMode;
+	EFI_STATUS SetMode;
+	EFI_STATUS SetAttribute;
+	EFI_STATUS ClearScreen;
+	EFI_STATUS SetCursorPosition;
+	EFI_STATUS EnableCursor;
+	SIMPLE_TEXT_OUTPUT_MODE* Mode;
+	
+}EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL;
+
+typedef struct
+{
+	EFI_STATUS Reset;
+	EFI_STATUS ReadKeyStroke;
+	VOID* WaitForKey;
+}EFI_SIMPLE_TEXT_INPUT_PROTOCOL;
+
 typedef struct
 {
 	EFI_TABLE_HEADER Hdr;	 //The header for the system table, see the above struct.
@@ -375,7 +409,7 @@ typedef struct
 	UINTN NumberOfTableEntries;
 
 	EFI_CONFIGURATION_TABLE* ConfigurationTable;
-}EFI_SYSTEM_TABLE;	//TODO: WRAP INTO REDEFINED STRUCTURES AND ALL.*/
+}EFI_SYSTEM_TABLE;
 
 /* Runtime definitions... */
 typedef EFI_STATUS GetTime(EFI_TIME* Time, EFI_TIME_CAPABILITIES* Capabilities);
