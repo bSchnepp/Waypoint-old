@@ -68,3 +68,38 @@ Compiler knows what type it is. Completely redundant to do that.
 
 
 Waypoint should have most of it's functionality defined through drivers. These must define a DriverEntry, DriverDispatcher, DriverUnload, etc. function to be loaded.
+
+
+All braces ALWAYS should be put on their own lines.
+Examples:
+
+void function(void)
+{
+	//code...
+}
+
+if (statement)
+{
+	//code...
+}
+
+while (statement)
+{
+	//code...
+}
+
+int array[] =
+{
+	//Numbers...
+}
+
+switch (code)
+{
+case 1:
+	//code...
+	break;
+default:
+	break;
+}
+
+etc. etc. Braces should NEVER be omitted. 
