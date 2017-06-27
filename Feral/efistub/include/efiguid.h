@@ -7,6 +7,8 @@
  *	Brian Schnepp [author]
  */
 
+//TODO: make sure the auto-generated license headers are correct sometime.
+
 /*
 	Definitions for a bunch of GUIDs that EFI wants.
  */
