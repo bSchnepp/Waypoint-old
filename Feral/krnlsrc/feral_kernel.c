@@ -21,7 +21,9 @@
 
 //Expect wchar_t to be 16-bit. Change this into a "CHAR16" later.)
 //EFISTUB from kernel will load drivers (and link accordingly) for us before jumping here. Hopefully. TODO on that.
-UINTN Kernel_Main(UINTN argc, wchar_t* argv)
+//EFISTUB simply appends a little stub at the start of the kernel which then loads the rest of the kernel. Nothing too special. This is just to
+//have the kernel pretend to be a PE executable so that EFI will load it.
+UINTN Kernel_Main(void)
 {
 	printk("Feral kernel loading...\n");
 	printk("RELEASE: ");

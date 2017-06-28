@@ -35,7 +35,7 @@ typedef uint64_t UINTN;
 
 #define MIN_ALIGNMENT_SIZE 4
 
-#if defined(HAVE_USE_MS_ABI)
+#if defined(HAVE_USE_MS_ABI)		//Unsure if we still need this, since clang can compile PE fine.
 	#define uefi_call_wrapper(func, va_bum, ...) func(__VA_ARGS__)
 #else
 
