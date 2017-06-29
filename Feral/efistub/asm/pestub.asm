@@ -1,4 +1,5 @@
 ;Trying to get a PE stub in assembly here so we don't have to make the kernel PE.
+;Simply slap this on the kernel and pretend like nothing ever happened.
 
 [BITS 64]
 

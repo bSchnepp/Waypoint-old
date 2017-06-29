@@ -8,7 +8,8 @@
  */
 
 #include <efi.h>
-#define EFIAPI /*__attribute__((thiscall))*/
+#include <kernel/feral_kernel.h>	//Connect to the kernel...
+#define EFIAPI __attribute__((ms_abi))
 //Implementation of the core functions we want for EFI, just enough to support the kernel correctly.
 
 
@@ -16,5 +17,8 @@
 EFI_STATUS EFIAPI efi_main(VOID* ImageHandle, EFI_SYSTEM_TABLE* SystemTable)
 {
 	InitializeUefi(ImageHandle, SystemTable);
+	//Associate the relevant functions to the tables we care about...
+
+	//Call the kernel from here, exit boot services.
 	return EFI_SUCCESS;
 }
