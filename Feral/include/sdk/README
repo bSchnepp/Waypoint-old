@@ -1,0 +1,2 @@
+This folder contains the headers which should be assumed to be 'stable' for interacting with the kernel.
+This contains core kernel interfaces which shouldn't change.

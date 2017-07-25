@@ -1,0 +1,30 @@
+FeralFS is a brand new filesystem I'm going to work on.
+
+It's goal is to be as fast as possible for read times. Write isn't as important as read, but we'd like that to be fast too.
+Ideally, we want to be able to find a file with only 2 - 3 checks (or better) if it's commonly accessed, instead of jumping around diectories and all.
+
+
+Filesystems have demonstratively been shown to be one area where Linux is light years ahead of GlassPanesOS for performance (many games have signifigantly shorter load times, up to 3x shorter).
+I'd like to create a new FS that tries to make that gap even larger, then later port this filesystem to Linux via FUSE or something.
+We want to have 4x to 6x shorter loading times. If we can outperform GlassPanesOS in every single way by a signifigant margin, wouldn't that look attractive to game developers who want to make games with very high computational requirements? "Waypoint is the only platform you can target today and all for something like that" would be nice to say.
+
+We're optimized for M.2 SSDs, (we assume if you have a hard drive, you're going to use something like NTFS, XFS, or ext4 on it, and it's for games that don't require fast loading or for non-game and non-OS content). Do everything we can to make reads take as little time as possible. Again, Waypoint has very high end gaming hardware in mind, where 6 - 8 cores running at 4.2Ghz and 32GB of DDR4 RAM with dual top-of-the-line graphics cards is the norm. (My current setup for testing is two Team Red graphics cards, a Zen 1700X CPU, and 32GB of RAM. Yes, the fans are very loud, it runs Pop!_OS for gaming right now.)
+
+
+
+Design considerations:
+	- Avoid write as much as possible. If something is duplicated, we track the differences of them. If source is changed, THEN we clone the file over.
+		- (Ignore that rule for caching file offsets and all.)
+	- Go ahead and abuse the poor little SSD's space. Don't WASTE it, but don't say 'we can't do that because size concerns'.
+		- (cache direct locations (ADDRESSES/OFFSETS, NOT COPIES) of commonly accessed files somewhere in disk where it's super easy to find that again instead of going through folders a lot)
+			- Make this user-configurable, at FORMAT-TIME.
+			- Files there are identified with file ID or something I don't know, figure it out.
+
+	- TRIM when needed.
+
+	- Avoid user intervention and maintence of the filesystem. This is for 'user experience' reasons so we can check a tickmark to say 'Use Waypoint for gaming!'
+		- Don't sacrifice performance for user experience. If those two ever come into conflict, pick performance every time.
+
+	- Max size should be something reasonable. We're expecting Waypoint to take even longer than the Hurd to become even remotely useful, so expect that 1 petabyte files to be fairly common.
+
+	- SSD wear ism't something to worry about too much. If we can help it, we should try to not shorten SSD life, but don't sacrifice read times for SSD lifetime.

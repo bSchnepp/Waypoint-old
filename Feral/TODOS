@@ -1,0 +1,72 @@
+Work on Multiboot 2 compliance.
+Memory management, filesystems, everything.
+Reference whatever's needed.
+
+Ensure we have some sort of ELF64 loader for x86-64 so that Multiboot 1 can load the kernel (indirectly) just fine.
+Maybe find some way to glue an ELF32 stub on the kernel???
+
+
+
+
+
+
+Priorities:
+	- Booting with Multiboot 1 on real hardware (ZEN R7 1700X and Formerly Braswell N3700 CPUs, we're optimized for ZEN (overclocked @ 4.00Ghz) though (the most powerful hardware I got).)
+	- Printing CPU information to screen and whatnot, holding for 30 seconds, then going into a kernel stop error, which correctly changes screen color to blue.
+	- Creating simple filesystem support. Possibility port from Mach or FreeBSD, more likely to have ports from Haiku.
+	- Write a brand new TCP/IP stack. Port what we can from FreeBSD and/or Haiku. Rewrite lots of stuff, since the kernel wants to be "client-server pseudo-distributed" over the network.
+		- (what we mean is that when we run games, we chuck non-critical processes at other machines willing to do tasks for us, then just ask for results when game closes. Less multi-tasking.)
+		- Maybe be the inverse of ^^, having a dedicated streaming server to run games light years better than anything else..?, and just chuck it over the network?
+		- (Waypoint isn't designed with security as a high priority. Mark processes which really don't matter to be right or wrong to do that, unless you REALLY trust the other machine (ie, own it))
+			- (That said, security is a far cry from a non-issue. Try to secure it as best we can without compromising performance. Less data sent == better.)
+			- Chuck your calculator or notification services or other things OUT OUT OUT!!!
+			- Possibly encrypt for security, if you're sharing with other people on LOCAL network. We don't share over internet. Too much performance penalty.
+			- Intent is to eventually be able to have games 'take over a remote CPU' for slower logic when available, so not so important things can have more cores allocated and not waste local 
+			  hardware. Game developers should assume remote hardware is awful, and that it's only use is 'extra cores to use if you want them'.) Useful for rendering small things without 
+			  wasting CPU time on small little details. (SQUEEEEZE that performance out!!!)
+				- This gives purpose to your old computers again! (Ivy Bridge or earlier!!!)
+	- Implement multitasking, multithreading, etc. Memory management is next!
+	- Create 'smss.pro' and 'waylogon.pro' and 'csrss.pro', which constitute "init for Feral kernels".
+	- Write libc wrapper for doing C stuff without closely relying on the kernel, along with a shell (possibly port PowerShell and Mono if we feel lazy. Intent is a "modern DOS shell" though.)
+	- Port over FreedomCore, portions of FreeBSD userspace, etc. etc. Complete POSIX compliance.
+	- Complete the framing manager/system. Start writing "The Waypoint Shell", which has all design choices carefully considered based on Fitt's law. Mockup coming soon.
+	- Write GPU drivers for Team Blue! (We only support Team Red initially because easier because documentation and hardware and sample source is plentiful)
+	[yeah there's no real roadmap after this point, this constitiutes a "0.5 Alpha Aligator" release here.]
+
+___
+
+When Waypoint becomes "production grade", we have a couple of release modifiers to do:
+	- Long Term Support (aimed at solid stability, backport security patchs and all that, etc.) Minimum of 10 years of support on it. 1.00 should be the first LTS.
+	- Short Term Support (aimed at somewhere in between regular release and LTS, stability is still a priority but you should get off this reasonably fast.)
+	- Regular release (Supported until the next release.)
+
+	LTS kernel releases are more aimed at PCs dedicated to doing rendering and spitting the output back over the network (streaming), or for render farms using Waypoint for some reason.
+
+
+___
+
+Random ideas that probably won't ever get consideration again:
+	- Do we want to keep the name Waypoint? Consider others like:
+		- "The Hunting Party" (it's a collection of non-*GPLed free software >>hunting<< for the best performance possible. Strange for an OS name though.)
+			- If we want a EMCA-234 personality, we port the MIT-licensed(?) old version(s) of WINE over. Not the latest LGPLed stuff.
+		- "Morpheus"/"MorpheOS" (It's just a dream that will never get off the ground anyway.)
+		- "GoldOS" (after the color scheme we picked)
+		- "Midnight" (we really like the color black for some reason. This might cause confusion with MidnightBSD though.)
+
+		- If we do change the name, it's most likely to something like "Cynic" or something. That actually aligns pretty well, sounds good, and isn't inaccurate.
+			- (Or some mutation of that, ie, "Synnik", but that starts to deviate away from 'awesome' like "Linux" is, which is why we don't hear about 386BSD!!!)
+			- I think the first release's working name probably will be "The Hunting Party", until a better name can be thought up as a release codename (Adjective + Animal format).
+
+			- Naming scheme has Kernel + Userspace/"OS name" + release codename (ie, version 1.00 LTS: "The Hunting Party") internally.
+				- This appears as a CHAR8 pointer with 64 characters (unused is just spaces), "Feral Waypoint version 1.00 'The Hunting Party' Long Term Support"
+				- That string (and more stuff) shows up when you do uname or something. Whatever we can for jury-rigging POSIX compliance.
+				- If you combine Feral with Toybox (or GNU), you'd get "Feral Toybox" and all. Not "Toybox/Feral" or "GNU/Feral" or especially "GNU+Feral"
+
+	- Directly port FAT32 drivers from FreeBSD.
+		(Is this legal though with the whole patent thing? What specifically is the patent on? AFAIK, it's on long filenames. Hence, strictly follow 8.3 filenames, or use NTFS for flash storage.)
+
+	- Write our own 3D graphics API, which ironically isn't really aimed at performance as it is to make it easy to create a new game/game engine against it. Fast enough for games, simple enough to 
+		learn fast. The reason why we go after better performance is so well-crafted games can run faster. We're after desktop gaming, so, more games (on WAYPOINT) is a plus for us.
+
+	- Be lazy and port Xorg instead of making our own framing system (new one specifically designed for performance). Probably not going to happen as better stuff exists.
+		- (We have to have xorg compatibility though, otherwise we'd lose cheap and effortless Linux game ports. We'd rather have bad than nothing.

@@ -1,0 +1,25 @@
+Well, I don't like injecting ideology into things, so I guess I'll keep this short, simple, etc.
+
+The big thing I want to do with Waypoint is to really learn how operating systems work, what can make them more effective (in the sense of better performance), etc. etc.
+By no means is the quality of code here very particularly high or anything, it's just enough to be considered "useful", but not necessarilly "Put this in the Linux kernel now!".
+(Dumb inefficient ways of doing things should be avoided, because they don't really help anything to be bad in the first place, you know it's bad, and you know how to make it better.)
+
+It's not really serious or anything like that. Something to keep me busy because I hate not having something to work on or do. Time is wasted doing nothing when that happens instead of making progress on SOMETHING.
+
+(that mindset makes it absolutely ironic that when the kernel has nothing to do, we put it in a spinlock (busy waiting!!!!), but I digress.)
+
+I'd like to add to Linux of course, but it's just so big and massive and I don't have anything in mind to make something better.
+(Plus adding to the Linux kernel to get good at C isn't the greatest thing to do)
+
+So, Waypoint is this project of mine to have:
+	- A new free software* operating system free from the GPL (which gets in the way too much of video card driver ports)
+	- A new operating system built from the grond-up for realtime 3D applications, (ie, games, but possibly also suitable for CAD and whatnot too).
+	- A project to learn more about operating systems from what's probably the best perspective to do so. (We're interested in going FAST, not architectural aesthetics (ie, microkernel))
+	- Something to get better at C, assembly, etc. Can we write some modules of the kernel in C++ and Rust too? Seems bloaty and arbitrary, but why not..?
+	- A hobby project to work on when I have nothing else to do. Making things is just what I love to do.
+	- No real "serious" projects ever completed, why not start now?
+	- To not look stupid when talking about this stuff. (Someone else can take Waypoint and make it a serious product: I don't have the resources to do that myself.)
+	- An excuse to look at older projects and learn about how they work and all and give that knowledge a purpose.
+	- Because in general, when going into something new, I like to start with the hardest thing possible because you build what you need along the way when you need it "just in time".
+	- Creating a new operating system that's not really NIXoid at heart seems fun anyway! We get to have complete design freedom and design the shell and all however we want.
+

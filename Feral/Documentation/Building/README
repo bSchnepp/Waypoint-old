@@ -1,0 +1,9 @@
+Run 'make all'.
+
+Ensure you have nasm, clang, lld, and bmake installed. The kernel will NOT build with GNU make. (unless you symlink gmake to bmake, this is NOT supported.)
+We do that to ensure we have NO GPL DEPENDENCIES REQUIRED TO BUILD THE KERNEL AT ALL, so that extensions to the kernel can be pretty much under whatever license you want.
+(Hence MPL, not GPL or LGPL)
+
+After that, you should get a file called 'floskrnl' and 'flbooter', 
+
+[INSTRUCTIONS TODO]

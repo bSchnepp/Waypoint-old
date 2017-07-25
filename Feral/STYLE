@@ -1,0 +1,186 @@
+General style guidelines
+(expect these to change all the time since I'm horribly inconsistent)
+_____
+
+
+__________________________
+IF YOU EVER HAVE MACHINE-DEPENDANT CODE, STICK IT IN THE HARDWARE ABSTRACTION LAYER OF THE RELEVANT PLATFORM.
+ABSOLUTELY
+NO
+EXCEPTIONS.
+__________________________
+
+
+System calls, commonly used functions, etc should always be defined with the <PREFIX> <OBJECT> <ACTION> order.
+(Extensions to that specifically are OK though.)
+PREFIX must ALWAYS be 2 characters. (ie, "Ke", "Ne", "Us", "Mm", "Pc", etc.)
+Some examples:
+KeGetCurrentThread
+UsConvertKernelTimeToEpochTime
+
+If you name a function which doesn't follow that format, you should assume that it's an 'unstable function' and can be changed/modified/etc. at any time for whatever reason.
+(Don't rely on that function still existing).
+
+Function declarations should ALWAYS be on ONE LINE.
+No matter how long it is, no matter how ridiculous it looks.
+ONE LINE.
+
+Like this:
+
+struct KernelRandomMemoryStructureThatCanBeAnything* KeGenerateRandomStructureWhichMayOrMayNotBeUsefulThisNameShowsAnExampleOfARidiculouslyLongFunctionToShowIReallyMeanOneLine(VOID* memory, UINTN size, UINT64 variable, UINT32 thing, KeTask task);	//Notice there's no newline here.
+
+
+
+
+If it's REALLY overflowing BADLY, then do this:
+
+struct KernelRandomMemoryStructureThatCanBeAnything* 
+KeGenerateRandomStructureWhichMayOrMayNotBeUsefulThisNameShowsAnExampleOfARidiculouslyLongFunctionToShowIReallyMeanOneLine(VOID* memory, UINTN size, UINT64 variable, UINT32 thing, KeTask task, UINT32 var2, UINT32 varNum, UINT16 othervar, ...);
+
+That's an extreme example and ridiculously long names and prototypes should be avoided anyway. You **really** shouldn't have more than 8 - 10 words in a prototype anyway.
+
+
+
+Variables can either be snake-case or camelcase with the first letter lowercase. I personally have no preference (having Lua as the first language I learned where snake-case was, as far as I'm aware, the norm, but prefer camelcase just aesthetically, I go back and forth all the time).
+
+Whatever you do: HUNGARIAN NOTATION IS A NO-NO. JUST DON'T DO IT.
+
+Don't do dumb things.
+TODO for how we define that.
+
+We use tabs. Not spaces.
+
+In general, length of lines doesn't really matter since I edit with gedit, nano, vim, and Notepad++ (currently in WINE, unfortunately). That's my preference, but if you want to have a line length limit of 80 characters, go for it. I don't really stick to a particular text editor, so pick whatever you like because it's just as inconsistent as I do things. Just don't stick auto-generated makefiles from an IDE that are painful to maintain.
+
+
+
+Avoid linked lists where possible.
+We'd prefer faster array lists. (CPU cache almost always makes array lists faster)
+Linked lists should only be used in the following conditions:
+	- The list will have items pushed and popped off it frequently.
+	- The list will have items added into it and removed from it frequently.
+	- There is absolutely no way of predicting the size of the array (ie, it can actually be ANYTHING.)
+	- The list frequently has it's size change drastically. (ie, whole sections get added fast or removed). Rather have consistent (but bloaty) size than waste CPU time reallocating an array.
+	- Linked list genuinely has a noticable performance benefit over array list, and the memory demands aren't too bad.
+
+
+
+____
+
+Design choices (optimizations and all that):
+	
+
+For assembly on x86-64, follow the following guidelines:
+	- ALL FUNCTIONS MUST FOLLOW THE GNU CONVENTION. ARGUMENTS PUSHED ON STACK. RETURN VALUES IN REGISTERS. CLEANUP LIKE NORMAL. SIMPLE, STANDARD ABI. DRIVER COMPATIBILITY BETWEEN KERNEL RELEASES IS IMPORTANT, ESPECIALLY WHEN WE RELY ON PROPRIETARY DRIVERS ON A SOFTWARE LIBRE KERNEL.
+	- Avoid using non-temporal access instructions (let whatever the cache wants to cache cache it.) Break this rule only if you REALLY know what you're doing, and REALLY only need something ONCE.
+	- Don't EVER use any prefetch functionality. EVER. Let the CPU do it's thing. There is NEVER a reason to manually prefetch something.
+
+Just in general:
+	If a function is very small (under 5 lines of code), it's probably better to inline it. Especially if it's within a loop, or has few callers.
+
+DO:
+
+static int n;
+inline void printkAMessage(void)
+{
+	n += 100;
+	printk("%i\n", n);
+}
+
+void func(void)
+{
+	while (int i = 0; i < 100; i++)
+	{
+		printkAMessage();
+	}
+}
+	
+
+
+DON'T:
+
+void printkAMessage(int n)
+{
+	int c = n + 100;
+	printk("%i\n", c);
+}
+
+void func()
+{
+	int n = 100;
+	while (int i = 0; i < 100; i++)
+	{
+		printkAMessage(n);
+	}
+}
+
+This creates an unnecessary amount of calls, and in general, performance is better with the former.
+Thus, keep short, simple but infrequently called functions inlined.
+
+
+The kernel needs to run AS FAST AS POSSIBLE (while still being written in C) in order to get out of game developers's way (and push framerates up!!!)
+If we want to be relevant, whatever runs at 30FPS on GlassPanesOS better run at ~75-80FPS on Waypoint on identical hardware. Anything short of that is failure. If it's impossible, that doesn't matter. Do it anyway. Break clean design and philosophy, and rewrite in assembly if necessary. Worse case scenario is rewriting it in straight binary with a hex editor. If it isn't over 256% better (or more) than the mainstream, it'll go down the road of [insert irrelevant dead OS here].
+
+
+We have one job/purpose/whatever:
+	MAKE AN OS THAT'S REALLY REALLY GOOD FOR GAMES.
+Hence, IT BETTER BE FAST. Promise (AND DELIVER) on MASSIVE performance improvements, just by using a different OS, (and having games optimized well for the new platform, not hacky ports)
+Said hacky ports better be easy to make. Somehow.
+
+We should have all sorts of OS-level magic to ensure games run AS FAST AS POSSIBLE on Waypoint. Since audio and the GUI system are in userspace, we need to have as fast IPC as we possibly can in order to squeeze more frames in. We need a method to detect games running on Waypoint, and give them an unfair share of CPU time intentionally. Things like that to boost game performance.
+
+
+To reduce kernel memory usage (and increase speed because caching):
+
+DO:
+
+int pos = 0;
+int strlength = strlen(input1);
+
+while (input1[pos] != '?')
+{
+	pos++;
+}
+printk("Found the question mark at: %i\n", pos);
+
+
+
+DON'T:
+for (int i = 0; i < strlen(input1); i++)
+{
+	if (input1[i] == '?')
+	{
+		printk("Found the question mark at: "%i\n", i);
+		return;
+	}
+}
+
+
+This puts the least likely condition as the tested statement, (this is just bad practice anyway).
+Plus, the code has an unnecessary return statement, and has unnecessary nested blocks.
+
+If this needs to be changed later as well, since strlen wasn't put into a variable, it needs to either be refactored so it is (wasting development time) or recalculated elsewhere (hurting performance).
+
+
+
+
+Generally, you should avoid having more than 3 'tabs' done. (3 nested blocks).
+If you need more than that, chances are you're doing something wrong, or it can be done better.
+
+
+
+
+
+
+In general, prefer while loops over for loops with if statements. This is just an optimization thing so there's only 1 check before moving on in the conditional rather than 2 (if i < max then if n meets the condition, read that slow then what I'm trying to say makes sense).
+
+
+
+
+
+
+We should have our system call API done with 'INT 0x8E', to not conflict with either a possible implementation of a Linux personality and also to not conflict with a ECMA-234 personality (implemented through a port of WINE as the EMCA-234 personality, which we pipe PE files to).
+
+Waypoint Is Not New Technology!
+
+(cheesy kind-of-pun, I know).
