@@ -8,7 +8,7 @@
  */
 
 #include <efi.h>
-#include <kernel/feral_kernel.h>	//Connect to the kernel...
+#include <kernel.h>	//Connect to the kernel...
 #define EFIAPI __attribute__((ms_abi))
 //Implementation of the core functions we want for EFI, just enough to support the kernel correctly.
 

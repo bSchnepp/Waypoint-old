@@ -8,10 +8,21 @@ export ARCH = x86_64
 
 export TRIPLE = $(ARCH)-unknown-none-gnu
 
+export CSTD = -std=c11 -Wall -Werror -Wconversion	##Embed these here so we don't forget.
+
 export ROOT = $(shell readlink -f .)
 
+## Adjective + Animal. My display driver keeps crashing. Actually really annoying. Hard to edit files when the screen goes black when you type!
+CODENAME = Angry Aligator
+RELEASE_CANIDATE = -rc-1000	##Negative 1000 since we're not even closed to finished.
+
+
+##Some thing we'll probably need to do is try to figure out how to force Aarch64 to be ONLY little-endian, without performance penalty checking all the time.
+
 ##Intentionally leave out the first '-I' so this looks natural.
-export INCLUDE = $(ROOT)/include -I($ROOT)/sdk
+export INCLUDE 				= $(ROOT)/include -I$(ROOT)/include/sdk
+export INCLUDE_INTERNAL 		= $(ROOT)/krnl_internal
+export INCLUDE_USERSPACE 		= $(ROOT)/include/userspace
 
 ##I'm really bad at makefiles. Fix this later.
 OBJS = 		bootstrap.o	\
@@ -31,14 +42,15 @@ EFI_GOAL       = floskldr
 
 export BUILD_DIR = $(shell readlink -f build/)
 
-all:
+all:	make_build_dir
 	##$(MAKE) libnyx/
 	##$(MAKE) libthreads/
-	mkdir -p build/
 	cd arch/$(ARCH)/ && $(MAKE) 
 
 clean:
 	rm -rf build/
 
+make_build_dir:
+	mkdir -p build/
 	
 	

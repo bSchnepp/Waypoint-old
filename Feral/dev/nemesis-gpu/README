@@ -1,0 +1,5 @@
+Drivers for GP10(8-2) (and later??) GPUs.
+Name is a reference to the Greek name of the same mythological character which gave Team Green it's name.
+
+Since I don't actually have any of these GPUs, please copy code from stargazer-gpu and rewrite it for Team Green, as I am unable to do so
+without the actual physical hardware to test with.

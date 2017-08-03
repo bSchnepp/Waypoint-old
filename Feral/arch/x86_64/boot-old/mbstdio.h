@@ -7,19 +7,14 @@
  *	Brian Schnepp	[author]
  */
 
+#ifndef _MB_STDIO_H_
+#define _MB_STDIO_H_
 
-#include "../feral_syscalls.h"
+#include <feral/feralobjs.h>
 
-#ifndef __FERAL_IO_MANAGER_MAIN__
-#define __FERAL_IO_MANAGER_MAIN__
+void* malloc(size_t size);
+void   free(void* object);
 
-//Create structures for files and whatnot...
-
-struct _IoRequest
-{
-	//TODO...
-}IoRequest;
 
 
 #endif
-

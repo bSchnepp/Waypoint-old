@@ -10,7 +10,7 @@
 #ifndef _LIB_NYX_ELF_H_
 #define _LIB_NYX_ELF_H_
 
-#include <nyx/size_abstract.h>
+#include <feral/feralobjs.h>
 
 #pragma pack(1)
 //Wrong names for lots of fields. Meh.

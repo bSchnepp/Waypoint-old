@@ -19,7 +19,7 @@
 
 typedef enum
 {
-	EXEC_NONE  = 0,	//Userspace Service can figure out what format it is by itself. Not helping.
+	EXEC_NONE  = 0,	//Userspace Service can figure out what format it is by itself. Not helping. Typically this is an ordinary file that ISN'T an executable anyway.
 	EXEC_ELF   = 1,
 	EXEC_MACHO = 2,	//Why not?
 	EXEC_COFF  = 3,
@@ -46,7 +46,7 @@ typedef enum
 	ISA_X86   = 0x03,
 	ISA_PPC   = 0x14,	//Need to implement UEFI for it first.
 	ISA_ARM32 = 0x28,
-	ISA_JCORE = 0x2A,	//Just in case I get a FPGA sometime + create UEFI firmware for it.
+	ISA_JCORE = 0x2A,	//Just in case I get a FPGA or other stuff sometime + create UEFI firmware for it.
 	ISA_x8664 = 0x3E,
 	ISA_ARM64 = 0xB7,
 	ISA_RISCV = 0xF3	//Again, need to create UEFI support for it.

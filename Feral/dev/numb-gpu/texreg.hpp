@@ -8,18 +8,14 @@
  */
 
 
-#include "../feral_syscalls.h"
-
-#ifndef __FERAL_IO_MANAGER_MAIN__
-#define __FERAL_IO_MANAGER_MAIN__
-
-//Create structures for files and whatnot...
-
-struct _IoRequest
+class TextureRegister
 {
-	//TODO...
-}IoRequest;
+public:
+	TextureRegister();
+	virtual ~TextureRegister();
 
-
-#endif
-
+private:
+	int TexWidth;
+	int TexHeight;
+	int TexChannels;
+};

@@ -1,33 +1,37 @@
 #ifndef _FERAL_FERALOBJS_H_
 #define _FERAL_FERALOBJS_H_
 
+#include <stdint.h>
+#include <stdbool.h>
+#include <stddef.h>
+
 #if defined(__x86_64__) || defined(__i386__)
-typedef unsigned long  UINT64;
+typedef unsigned long long  UINT64;
 typedef unsigned int   UINT32;
 typedef unsigned short UINT16;
 typedef unsigned char  UINT8;
 	
-typedef signed long  INT64;
+typedef signed long long  INT64;
 typedef signed int   INT32;
 typedef signed short INT16;	
 typedef signed char  INT8;
 		
-typedef UINT8 BOOLEAN;
+typedef bool BOOLEAN;
 typedef UINT8 BYTE;
 #endif
 
 #if defined(__arm__) || defined(__aarch64__)
-typedef unsigned long  UINT64;
+typedef unsigned long long  UINT64;
 typedef unsigned int   UINT32;
 typedef unsigned short UINT16;
 typedef unsigned char  UINT8;
 	
-typedef signed long  INT64;
+typedef signed long long  INT64;
 typedef signed int   INT32;
 typedef signed short INT16;	
 typedef signed char  INT8;
 		
-typedef UINT8 BOOLEAN;
+typedef bool BOOLEAN;
 typedef UINT8 BYTE;
 //Are these correct? I have 2 little quad-core Acorn processor machines lying around to test on.
 //Not sure if they're Aarch64 or if they're ARM32. No labelling or anything ): Will port + test sometime.
@@ -49,7 +53,7 @@ typedef INT16* PINT16;
 typedef INT8*  PINT8;
 
 
-typedef BOOLEAN*  PBOOLEAN;
+typedef bool*  PBOOLEAN;
 typedef BYTE*     PBYTE;
 
 typedef CHAR8     CCHAR, CHAR;

@@ -11,6 +11,8 @@
 #ifndef _HARDABS_SWITCH_TASK_H_
 #define _HARDABS_SWITCH_TASK_H_
 
+#include <krnl/management/task.h>
+
 /* TODO: We do this in hardabs because it's largely machine dependant. */
 /* Since the required prerequesites to working on this (concept of 'Tasks') isn't done yet, well...*/
 

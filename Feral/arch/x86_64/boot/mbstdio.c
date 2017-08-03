@@ -7,19 +7,4 @@
  *	Brian Schnepp	[author]
  */
 
-
-#include "../feral_syscalls.h"
-
-#ifndef __FERAL_IO_MANAGER_MAIN__
-#define __FERAL_IO_MANAGER_MAIN__
-
-//Create structures for files and whatnot...
-
-struct _IoRequest
-{
-	//TODO...
-}IoRequest;
-
-
-#endif
-
+//TODO!!!

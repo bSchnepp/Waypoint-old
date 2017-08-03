@@ -1,7 +1,9 @@
 #ifndef _LIB_NYX_MACHO_H_
 #define _LIB_NYX_MACHO_H_
 
-#include <nyx/size_abstract.h>
+#include <feral/feralobjs.h>
+
+/* Feral supports Mach-O just because. It's not a priority feature and really only exists because it's fun. */
 
 #pragma pack(1)
 typedef struct _MachHeader

@@ -11,7 +11,7 @@
 #ifndef __FERAL_SYSTEM_CALLS_H_
 #define __FERAL_SYSTEM_CALLS_H_
 
-#include <nyx/size_abstract.h>
+#include <feral/feralobjs.h>
 
 struct Kernel_Filesystem
 {

@@ -1,0 +1,30 @@
+Waypoint's API is fairly simple.
+
+
+The main file which will be used is <feral.h>, which can be included as #include <feral.h>
+
+Before this include, if you add #define WAYPOINT_LEAN_AND_MEAN, you remove the GUI parts and other non-critical interfaces.
+
+
+The most simple Waypoint program is to show a MessageBox to the screen. While the specific window manager might be different across different distributions of Waypoint, the same function will generally still work.
+
+
+#include <feral.h>
+
+int main(int argc, char** argv)
+{
+	MessageBox(NULL, L"Hello, world!", L"My first Waypoint program!", MB_OK);
+	return 0;
+}
+
+
+Waypoint uses Unicode strings for messages which will be shown "externally" (meaning a user can see it).
+
+
+In order, the arguments are:
+	Owning "Frame", which is a frame which can be shown on the desktop which has 'parental ownership' over the MessageBox.
+	String that the MessageBox displays. This is a Unicode string.
+	Frame "title" or "caption", which is what the top bar of the MessageBox displays.
+	Type of message box. The values can be binary OR'd together for more values. These are defined in feral.h
+
+[TODO when userspace actually exists]

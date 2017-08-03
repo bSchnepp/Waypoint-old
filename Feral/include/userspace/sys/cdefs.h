@@ -7,14 +7,21 @@
  *	Brian Schnepp [author]
  */
 
-#include <hardabs/bootstruct.h>
+#ifndef	_CDEFS_H_
+#define	_CDEFS_H_
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
 
 
 
-#include "mach_types.h"
+//TODO: relevant macros for clang to build the kernel alright.
 
-void Kernel_Main(FeralBoot_Header* header)
-{
-	//Hello, world!!
-	for (;;){};	//Temporary!!
+
+
+
+#if defined(__cplusplus)
 }
+#endif
+#endif

@@ -150,7 +150,6 @@ void KElfLoader(MultibootInfo* header)
 	//I think this is how that works?
 	frl_header->RamAmount = ((map->LengthHigh << 32) | (LengthLow));
 	
-
 	//Inline ASM to switch to 64-bit, prep the kernel, load!
 	return;
 }

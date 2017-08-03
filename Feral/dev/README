@@ -1,0 +1,5 @@
+Devices implemented as programs running on the computer.
+
+Some of this include our '/dev/random', which is actually A:/posix/root/dev/random, as well as our generic virtual GPU which utilizes (if glNEXT is not supported) the real GPU to run glNEXT code, or a CPU core to run glNEXT code very slowly.
+
+We'd rather have very slow graphics than no graphics, and since we rely on glNEXT for pretty much everything (desktop compositing and whatnot)

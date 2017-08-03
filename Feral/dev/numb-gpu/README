@@ -1,0 +1,20 @@
+Source code files for the virtual GPU ("numb-gpu").
+It's aimed at being fairly dependant on glNEXT and thus (like Team Green did with OGL), uses a lot of data structures for glNEXT directly as registers.
+
+The name ("Numb") comes from this being a fallback if a reasonably new GPU is not found, hence "I can't feel it". This way, we guarantee glNEXT support even if the hardware that does run it is awful.
+
+Numb is implemented as a GPGPU program which emulates a simple graphics card which does it's best to maximize performance as it can.
+It's a dirty hack to ensure the correct experience is the one given. (Not a text-only black screen complaining about no graphics drivers!!!)
+
+
+Numb represents itself in several different ways in Device Manager (and/or Task Coordinator),
+"Numb 1000"   means the virtual machine is taking up a real core and only 1 thread (SMT/HT is not supported).
+"Numb 1000X"  means the virtual machine is taking up a real core and two (or more, depending on CPU) threads.
+"Numb 1000E"  means the virtual machine is running on an arbitrary amount of CPU cores and threads from a machine over the local network.
+"Numb 1000R"  means the virtual machine is running on a real GPU which has drivers for Waypoint, but does not support glNEXT natively, so it runs in an Open Compute Layer virtual machine.
+"Numb 1000ER" means the virtual machine 'blends' CPU and GPU together and using 100% of a machine on the local network to provide graphics acceleration.
+		^^ In some situations, it might actually be better to use Numb than it is to use local dedicated graphics hardware (laptops, reused thin clients, etc)
+
+'1000' comes from the iteration of the kernel that it was last updated. Numb is a low-priority feature, and thus won't get worked on until a full 1.00 release of Waypoint.
+(1.00.0)
+

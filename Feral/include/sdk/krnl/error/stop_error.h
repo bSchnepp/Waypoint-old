@@ -10,7 +10,7 @@
 #ifndef _KRNL_INCLUDE_ERROR_
 #define _KRNL_INCLUDE_ERROR_
 
-#include <nyx/size_abstract.h>
+#include <feral/feralobjs.h>
 
 struct StopErrorMgr
 {
